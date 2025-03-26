@@ -13,7 +13,7 @@ app.post("/", (req, res) => {
 app.get("/webhooks", (req, res) => {
   if (
     req.query["hub.mode"] == "subscribe" &&
-    req.query["hub.verify_token"] == token
+    req.query["hub.verify_token"] == "seu_token"
   ) {
     res.send(req.query["hub.challenge"]);
   } else {
