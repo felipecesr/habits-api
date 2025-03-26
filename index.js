@@ -22,12 +22,12 @@ app.get("/webhooks", (req, res) => {
 });
 
 app.post("/webhooks", (req, res) => {
+  console.log(body);
   const body = JSON.parse(req.body);
   if (body.field !== "messages") {
     // not from the messages webhook so dont process
     return res.sendStatus(400);
   }
-  console.log(body);
   res.send(JSON.stringify(body));
 });
 
