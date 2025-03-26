@@ -27,6 +27,7 @@ app.post("/webhooks", (req, res) => {
     // not from the messages webhook so dont process
     return res.sendStatus(400);
   }
+  console.log(body);
   res.send(JSON.stringify(body));
 });
 
