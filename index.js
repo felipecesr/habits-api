@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -31,6 +34,6 @@ app.post("/webhooks", (req, res) => {
   res.send(JSON.stringify(body));
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(port, () => {
   console.log("Server is running...");
 });
