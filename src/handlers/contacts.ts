@@ -17,7 +17,7 @@ export const getContacts = async (req: Request, res: Response) => {
 };
 
 export const getOneContact = async (req: Request, res: Response) => {
-  const contactId = req.params.id;
+  const contactId = req.params.contactId;
   const contact = await prisma.contact.findFirst({
     where: { id: contactId, userId: req.user.id },
   });
@@ -37,7 +37,7 @@ export const createContact = async (req: Request, res: Response) => {
 };
 
 export const updateContact = async (req: Request, res: Response) => {
-  const contactId = req.params.contactsId;
+  const contactId = req.params.contactId;
   const { name, whatsappNumber } = req.body;
   const contact = await prisma.contact.update({
     where: { id_userId: { id: contactId, userId: req.user.id } },
@@ -50,7 +50,7 @@ export const updateContact = async (req: Request, res: Response) => {
 };
 
 export const deleteContact = async (req: Request, res: Response) => {
-  const contactId = req.params.contactsId;
+  const contactId = req.params.contactId;
   const contact = await prisma.contact.delete({
     where: { id_userId: { id: contactId, userId: req.user.id } },
   });

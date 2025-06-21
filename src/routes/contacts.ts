@@ -21,15 +21,15 @@ contactsRouter.post(
   createContact
 );
 
-contactsRouter.get("/:contactsId", getOneContact);
+contactsRouter.get("/:contactId", getOneContact);
 
 contactsRouter.put(
-  "/:contactsId",
+  "/:contactId",
   body("name").optional(),
   body("whatsappNumber").optional(),
   updateContact
 );
 
-contactsRouter.delete("/:contactsId", deleteContact);
+contactsRouter.delete("/:contactId", deleteContact);
 
 export default contactsRouter;
