@@ -1,5 +1,6 @@
 ```
 erDiagram
+    USER ||--o{ CONTACT : has
     USER ||--o{ CONVERSATION : has
     CONTACT ||--o{ CONVERSATION : has
     CONVERSATION ||--o{ MESSAGE : includes
@@ -13,6 +14,7 @@ erDiagram
 
     CONTACT {
         string id PK
+        string user_id FK "dono do contato"
         string name
         string whatsapp_number
     }
@@ -33,6 +35,7 @@ erDiagram
         boolean delivered
     }
 ```
+
 ## Vantagens e desvantagens de criar a tabela conversation
 
 Vantagens:
@@ -71,12 +74,12 @@ Crescer no futuro com novas features (arquivamento, múltiplas conversas, estat�
 👉 Use a tabela CONVERSATION. Ela te dá clareza, flexibilidade e consistência de domínio.
 
 📌 Resumo
-Critério	Sem CONVERSATION	Com CONVERSATION
-Simplicidade inicial	✅ Simples	❌ Mais complexa
-Escalabilidade futura	❌ Limitada	✅ Alta
-Clareza semântica	❌ Menor	✅ Maior
-Performance (com muitos dados)	❌ Pode degradar	✅ Melhor com índices
-Boas práticas de modelagem	⚠️ Evitável	✅ Recomendado
+Critério Sem CONVERSATION Com CONVERSATION
+Simplicidade inicial ✅ Simples ❌ Mais complexa
+Escalabilidade futura ❌ Limitada ✅ Alta
+Clareza semântica ❌ Menor ✅ Maior
+Performance (com muitos dados) ❌ Pode degradar ✅ Melhor com índices
+Boas práticas de modelagem ⚠️ Evitável ✅ Recomendado
 
 Se estiver construindo algo com potencial de crescimento, minha recomendação é usar a tabela CONVERSATION desde o início. Isso evita refatorações caras depois.
 
@@ -103,4 +106,3 @@ Permite identificar quem é o destinatário da mensagem recebida via webhook ("t
 Garante que o mapeamento entre contato e conversa seja preciso.
 
 Facilita filtros futuros, logs de envio por número, etc.
-
