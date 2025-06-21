@@ -1,20 +1,31 @@
 import { Router } from "express";
+import { body } from "express-validator";
 import messagesRouter from "./messages";
 import streamRouter from "./stream";
+import {
+  createConversation,
+  deleteConversation,
+  getConversations,
+  getOneConversation,
+} from "../handlers/conversations";
+import { handleInputErrors } from "../modules/middleware";
 
 const conversationsRouter = Router({ mergeParams: true });
 
-conversationsRouter.get("/", (req, res) => {
-  res.json({ message: "conversations" });
-});
+conversationsRouter.get("/", getConversations);
 
-conversationsRouter.post("/", (req, res) => {});
+conversationsRouter.post(
+  "/",
+  body("contactId").isString(),
+  handleInputErrors,
+  createConversation
+);
 
-conversationsRouter.get("/:conversationsId", (req, res) => {});
+conversationsRouter.get("/:conversationId", getOneConversation);
 
-conversationsRouter.delete("/:conversationsId", (req, res) => {});
+conversationsRouter.delete("/:conversationId", deleteConversation);
 
-conversationsRouter.use("/:conversationsId/messages", messagesRouter);
-conversationsRouter.use("/:conversationsId/stream", streamRouter);
+conversationsRouter.use("/:conversationId/messages", messagesRouter);
+conversationsRouter.use("/:conversationId/stream", streamRouter);
 
 export default conversationsRouter;
