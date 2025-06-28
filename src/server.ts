@@ -3,7 +3,7 @@ import morgan from "morgan";
 import router from "./router";
 import { protect } from "./modules/auth";
 import { createNewUser, signin } from "./handlers/user";
-import webhooksRouter from "./routes/webhooks";
+import { createMessageWebhook, registerWebhook } from "./handlers/webhooks";
 
 const app = express();
 
@@ -15,10 +15,11 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello, World!" });
 });
 
-app.use('/api', protect, router);
+app.use("/api", protect, router);
 
 app.post("/user", createNewUser);
 app.post("/signin", signin);
-router.use("/webhooks", webhooksRouter);
+app.get("/webhooks", registerWebhook);
+app.post("/webhooks", createMessageWebhook);
 
 export default app;
