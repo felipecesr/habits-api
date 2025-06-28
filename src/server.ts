@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import router from "./router";
 import { protect } from "./modules/auth";
@@ -21,5 +21,12 @@ app.post("/user", createNewUser);
 app.post("/signin", signin);
 app.get("/webhooks", registerWebhook);
 app.post("/webhooks", createMessageWebhook);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  if (err.type === "auth") {
+    res.status(401).json({ error: "unauthorized" });
+  }
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
 export default app;
