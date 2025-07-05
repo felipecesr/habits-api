@@ -2,6 +2,19 @@ import { Request, Response, NextFunction } from "express";
 import prisma from "../db";
 import { comparePasswords, createJWT, hashPassword } from "../modules/auth";
 
+export type SessionToken = string & { readonly _brand: unique symbol };
+
+interface UserRequest {
+  body: {
+    email?: string;
+    password?: string;
+  };
+}
+
+interface AuthResponse {
+  token: SessionToken;
+}
+
 export const createNewUser = async (
   req: Request,
   res: Response,
@@ -24,22 +37,23 @@ export const createNewUser = async (
   }
 };
 
-export const signin = async (req: Request, res: Response) => {
+export const signin = async (
+  req: Request<{}, {}, UserRequest["body"]>,
+  res: Response<AuthResponse | { error: string }>
+) => {
   const user = await prisma.user.findUnique({
     where: { email: req.body.email },
   });
 
   if (!user) {
-    res.status(401);
-    res.send("Invalid username or password");
+    res.status(401).send({ error: "Invalid username or password" });
     return;
   }
 
   const isValid = await comparePasswords(req.body.password, user.password);
 
   if (!isValid) {
-    res.status(401);
-    res.send("Invalid username or password");
+    res.status(401).send({ error: "Invalid username or password" });
     return;
   }
 

@@ -9,7 +9,7 @@ export const handleInputErrors = (
   req: Request,
   res: Response<ErrorResponse>,
   next: NextFunction
-): void => {
+) => {
   const errors: Result<ValidationError> = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -18,4 +18,4 @@ export const handleInputErrors = (
   } else {
     next();
   }
-}
+};

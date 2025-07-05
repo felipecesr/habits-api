@@ -1,10 +1,5 @@
-// @ts-nocheck
 import { Request, Response } from "express";
 import prisma from "../db";
-
-// interface AuthenticatedRequest extends Request {
-//   user: { id: string };
-// }
 
 export const getContacts = async (req: Request, res: Response) => {
   const user = await prisma.user.findUnique({

@@ -31,6 +31,7 @@
     "node": "24.x"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash.merge": "^4.6.9",
